@@ -1,5 +1,5 @@
 <template lang="pug">
-  .vuecal__cell(:class="{ [cssClass]: true, splitted: splits.length, 'vuecal__cell--has-events': events.length }" :style="cellStyles")
+  .vuecal__cell(:class="{ [cssClass]: true, splitted: splits.length, 'vuecal__cell--has-events': events.length, [`vuecal__cell--has-events-${events.length}`]: true }" :style="cellStyles")
     .vuecal__cell-content(:class="splits.length && `vuecal__cell-split ${splits[i - 1].class}`" v-for="i in (splits.length || 1)")
       .split-label(v-if="splits.length" v-html="splits[i - 1].label")
       div(v-if="content" v-html="content")
@@ -24,7 +24,7 @@
           .vuecal__event-resize-handle(v-if="editableEvents && event.startTime"
                                        @mousedown="editableEvents && time && onDragHandleMouseDown($event, event)"
                                        @touchstart="editableEvents && time && onDragHandleMouseDown($event, event)")
-      span(v-if="$parent.view.id === 'month' && events.length").vuecal__cell-events-count {{ events.length }}
+      span(v-if="$parent.view.id === 'month' && events.length && !events[0].hideCount").vuecal__cell-events-count {{ events.length }}
     .vuecal__now-line(v-if="today && time" :style="`top: ${todaysTimePosition}px`")
 </template>
 
